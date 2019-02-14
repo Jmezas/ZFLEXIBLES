@@ -1,0 +1,679 @@
+﻿@model sisCCS.EntityLayer.EUsuario
+
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 id="MainTitle">CREAR USUARIO</h2>
+
+<div class="form-group">
+    <a href="@Url.Action("Principal", "Seguridad")" class="btn-u btn-u-default"><i class="fa fa-arrow-circle-left"></i> Salir</a>&nbsp;
+    <button class="btn-u btn-u-blue" id="btnLimpiar"><i class="fa fa-file-o"></i> Limpiar</button>
+    <button class="btn-u btn-u-green" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+    <button class="btn-u btn-u-orange hidden" id="btnModificar"><i class="fa fa-save"></i> Modificar</button>
+    <button class="btn-u btn-u-red" style="display:none;" id="btnEliminar"><i class="fa fa-times"></i> Desactivar</button>
+</div>
+<div class="tab-v2">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#info-user" data-toggle="tab">Informaci&oacute;n de Usuario</a></li>
+        <li class=""><a href="#sucursal" data-toggle="tab">Asignaci&oacute;n de Sucursal y L&iacute;nea de Negocio</a></li>
+    </ul>
+    <div class="tab-content sky-form" id="dvRegistro">
+        <div class="tab-pane fade in active" id="info-user">
+            @using (Html.BeginForm("RegistrarUsuario", "Seguridad", FormMethod.Post, new { @id = "FrmUsuario" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label">1. Tipo de Documento de Identidad (*)</label>
+                            @Html.DropDownList("TipoDocumento.Id", ViewData["TiposDocumento"] as SelectList, new { @class = "form-control input-sm no-null" })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">2. N&uacute;mero de Documento de Identidad (*)</label>
+                            <div class="input-group">
+                                <a class="input-group-addon cursor-pointer" href="@Url.Action("BuscarUsuario", "Shared")" id="aBuscarUsuario"><i class="fa fa-search"></i></a>
+                                @Html.TextBoxFor(m => m.NroDocumento, new { @class = "form-control input-sm no-null" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">3. Nombres (*)</label>
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control input-sm no-null" })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">4. Apellido Paterno (*)</label>
+                            @Html.TextBoxFor(m => m.ApellidoPaterno, new { @class = "form-control input-sm no-null" })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">5. Apellido Materno (*)</label>
+                            @Html.TextBoxFor(m => m.ApellidoMaterno, new { @class = "form-control input-sm no-null" })
+                        </div>
+                        <div class="form-group">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#address" data-toggle="tab">12. Direcci&oacute;n (Opcional)</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="address">
+                                    <div class="form-group">
+                                        <label class="control-label">Departamento</label>
+                                        @Html.DropDownList("Departamento", ViewData["Departamentos"] as SelectList, "Seleccione", new { @class = "form-control input-sm" })
+                                    
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Provincia</label>
+                                        <select name="Provincia" class="form-control input-sm">
+                                            <option>Seleccione</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Distrito</label>
+                                        <select name="Ubigeo.Id" class="form-control input-sm">
+                                            <option>Seleccione</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Direcci&oacute;n</label>
+                                        @Html.TextBoxFor(m => m.Direccion, new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label">6. Fecha de Nacimiento</label>
+                            @Html.TextBoxFor(m => m.FechaNacimiento, new { @class = "form-control input-sm datepicker" })
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">7. Tel&eacute;fono</label>
+                            @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="form-group">
+                            <label>8. Correo Electr&oacute;nico</label>
+                            @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="form-group">
+                            <label>9. Perfil de Usuario (*)</label>
+                            @Html.DropDownList("Perfil.Id", ViewData["Perfiles"] as SelectList, "Seleccione", new { @class = "form-control input-sm no-null" })
+                        </div>
+                        <div class="form-group">
+                            <label>10. C&oacute;digo de Usuario del Sistema (*)</label>
+                            @*@Html.TextBoxFor(m => m.Usuario, new { @class = "form-control input-sm no-null" })*@
+                            <input class="form-control input-sm no-null" id="Usuario" name="Usuario" type="text" value="">
+                        </div>
+                        <div class="form-group">
+                            <label>11. Password del Sistema (*)</label>
+                            @*@Html.PasswordFor(m => m.Password, new { @class = "form-control input-sm no-null" })*@
+                            <input class="form-control input-sm no-null" id="Password" name="Password" type="password" autocomplete="off"
+                                   readonly onfocus="this.removeAttribute('readonly');">
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="sucursal" class="tab-pane">
+            @Html.HiddenFor(m => m.Id)
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">C&oacute;digo del Usuario</label>
+                        <div class="input-group">
+                            <a class="input-group-addon cursor-pointer" href="@Url.Action("BuscarUsuario", "Shared")" id="aEncontrarUsuario"><i class="fa fa-search"></i></a>
+                            @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control input-sm no-null" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <label class="control-label">Nombre del Usuario</label>
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control input-sm no-null" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#line-suc" data-toggle="tab">Seleccionar Sucursal y L&iacute;nea de Negocio</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="line-suc">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label">Sucursal</label>
+                                    <select name="Sucursal" class="form-control input-sm">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label">L&iacute;nea de Negocio</label>
+                                    <select name="LineaNegocio" class="form-control input-sm">
+                                    </select>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn-u btn-u-green" id="btnAgregar"><i class="fa fa-plus"></i> Agregar</button>
+                        </div>
+                        <div class="form-group">
+                            <table class="table table-bordered" id="tbAsignaciones">
+                                <thead>
+                                    <tr>
+                                        <th>Sucursal</th>
+                                        <th>L&iacute;nea de Negocio</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3">Agregue las asignaciones correspondientes.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Assets/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        var IdUsuarioGlobal;
+        var Usuarios = {
+            CargarContenido: function () {
+
+            },
+            Inicializar: function () {
+                $('.datepicker').datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    prevText: '<i class="fa fa-angle-left"></i>',
+                    nextText: '<i class="fa fa-angle-right"></i>'
+                });
+
+                $('#aBuscarUsuario').magnificPopup({
+                    tClose: 'Cerrar',
+                    type: 'ajax',
+                    settings: {
+                        cache: false,
+                        async: false
+                    },
+                    callbacks: {
+                        ajaxContentAdded: function () {
+                            var $content = $(this.content);
+                             
+                            // Evento llamado cuando se presione el botón grabar
+                            $content.find('#tbUsuarios').find('tbody').on('click', '.btn-info', function () {
+                                $('#btnEliminar').show();
+                                var iIdUsuario = $(this).closest('tr').attr('data-id');
+                                IdUsuarioGlobal = iIdUsuario;
+                                var oUsuario = buEncontrar(iIdUsuario);
+                                Usuarios.Vars.Formulario.find('input[name="Id"]').val(oUsuario["Id"]);
+                                Usuarios.Vars.Formulario.find('select[name="TipoDocumento.Id"]').val(isNull(oUsuario["TipoDocumento"]["Id"]) ? 2 : oUsuario["TipoDocumento"]["Id"]);
+                                Usuarios.Vars.Formulario.find('input[name="NroDocumento"]').val(oUsuario["NroDocumento"]);
+                                Usuarios.Vars.Formulario.find('input[name="Nombre"]').val(oUsuario["Nombre"]);
+                                Usuarios.Vars.Formulario.find('input[name="ApellidoPaterno"]').val(oUsuario["ApellidoPaterno"]);
+                                Usuarios.Vars.Formulario.find('input[name="ApellidoMaterno"]').val(oUsuario["ApellidoMaterno"]);
+                                Usuarios.Vars.Formulario.find('input[name="Telefono"]').val(oUsuario["Telefono"]);
+                                Usuarios.Vars.Formulario.find('input[name="CorreoElectronnico"]').val(oUsuario["CorreoElectronnico"]);
+                                Usuarios.Vars.Formulario.find('input[name="Usuario"]').val(oUsuario["Usuario"]);
+                                Usuarios.Vars.Formulario.find('select[name="Perfil.Id"]').val(oUsuario["Perfil"]["Id"]);
+                                Usuarios.Vars.Formulario.find('select[name="Departamento"]').val(oUsuario["Ubigeo"]["CodigoDepartamento"]);
+                                Usuarios.Vars.Formulario.find('select[name="Departamento"]').trigger('change');
+                                Usuarios.Vars.Formulario.find('select[name="Provincia"]').val(oUsuario["Ubigeo"]["CodigoProvincia"]);
+                                Usuarios.Vars.Formulario.find('select[name="Provincia"]').trigger('change');
+                                Usuarios.Vars.Formulario.find('select[name="Ubigeo.Id"]').val(oUsuario["Ubigeo"]["Id"]);
+                                Usuarios.Vars.Formulario.find('input[name="Direccion"]').val(oUsuario["Direccion"]);
+                                Usuarios.Vars.Formulario.find('input[name="FechaNacimiento"]').val(isNull(oUsuario["FechaNacimiento"]) ? '' : General.Convert.FromDateToText(General.Convert.FromServerDateFromDate(oUsuario["FechaNacimiento"])));
+                                Usuarios.Vars.Formulario.find('input[name="Password"]').removeClass('no-null');
+                                Usuarios.Vars.Formulario.find('input[name="Password"]').closest('div.form-group').addClass('hidden');
+                                $('#btnGuardar').addClass('hidden');
+                                $('#btnModificar').removeClass('hidden');
+                                $('#MainTitle').html('MODIFICAR USUARIO');
+                                Usuarios.Vars.Formulario.attr('action', General.Utils.ContextPath('Seguridad/ModificarUsuario'));
+                                $.magnificPopup.close();
+                            });
+                        },
+                        close: function () {
+
+                        }
+                    },
+                    closeOnBgClick: false,
+                    enableEscapeKey: true,
+                    showCloseBtn: false,
+                    tLoading: 'Cargando contenido...',
+                    tError: 'El contenido no ha podido ser cargado.'
+                })
+                $('#aEncontrarUsuario').magnificPopup({
+                    tClose: 'Cerrar',
+                    type: 'ajax',
+                    settings: {
+                        cache: false,
+                        async: false
+                    },
+                    callbacks: {
+                        ajaxContentAdded: function () {
+                            var $content = $(this.content);
+
+                            // Evento llamado cuando se presione el botón grabar
+                            $content.find('#tbUsuarios').find('tbody').on('click', '.btn-info', function () {
+                                var iIdUsuario = $(this).closest('tr').attr('data-id');
+                                var oUsuario = buEncontrar(iIdUsuario);
+                                $('#sucursal').find('input[name="Id"]').val(oUsuario["Id"]);
+                                $('#sucursal').find('input[name="Usuario"]').val(oUsuario["Usuario"]);
+                                $('#sucursal').find('input[name="Nombre"]').val(oUsuario["NombreCompleto"]);
+                                $.ajax({
+                                    async: true,
+                                    type: 'post',
+                                    url: General.Utils.ContextPath('Inventario/ListarLineasDeNegocio'),
+                                    dataType: 'json',
+                                    data: { iIdEmpresa: oUsuario["Perfil"]["EmpresaHolding"]["Empresa"]["Id"] },
+                                    success: function (response) {
+                                        if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error
+                                            $('#sucursal').find('select[name="LineaNegocio"]').empty();
+                                            $('#sucursal').find('select[name="LineaNegocio"]').append($('<option>', { value: -1, text: 'Seleccione' }))
+                                            $.grep(response, function (oLineaNegocio) {
+                                                $('#sucursal').find('select[name="LineaNegocio"]').append($('<option>', { value: oLineaNegocio["Id"], text: oLineaNegocio["Nombre"] }))
+                                            });
+                                        }
+                                    }
+                                });
+                                $.ajax({
+                                    async: true,
+                                    type: 'post',
+                                    //url: General.Utils.ContextPath('AcuerdoComercial/ListarSucursales'),
+                                    //data: { iIdEmpresaHolding: oUsuario["Perfil"]["EmpresaHolding"]["Empresa"]["Id"] },
+                                    url: General.Utils.ContextPath('Fidelizacion/ListarSucursalesF'),
+                                    success: function (response) {
+                                        if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error
+                                            $('#sucursal').find('select[name="Sucursal"]').empty();
+                                            $('#sucursal').find('select[name="Sucursal"]').append($('<option>', { value: -1, text: 'Seleccione' }))
+                                            $.grep(response, function (oSucursal) {
+                                                $('#sucursal').find('select[name="Sucursal"]').append($('<option>', { value: oSucursal["Id"], text: oSucursal["Nombre"] }))
+                                            });
+                                        }
+                                    }
+                                });
+                                $.ajax({
+                                    async: true,
+                                    type: 'post',
+                                    url: General.Utils.ContextPath('Seguridad/ListarAsignacionesSucLinPorUsuario'),
+                                    dataType: 'json',
+                                    data: { iIdUsuario: iIdUsuario },
+                                    success: function (response) {
+                                        $('#tbAsignaciones tbody').empty();
+                                        if (response.length == 0) {
+                                            $('#tbAsignaciones tbody').html('<tr><td colspan="3">Agregue las asignaciones correspondientes</td></tr>');
+                                        } else {
+                                            $.grep(response, function (item) {
+                                                $('#tbAsignaciones tbody').append(
+                                                    '<tr data-id="' + item["Id"] + '">' +
+                                                        '<td>' + item["Sucursal"]["Nombre"] + '</td>' +
+                                                        '<td>' + item["LineaNegocio"]["Nombre"] + '</td>' +
+                                                        '<td class="text-center">' +
+                                                            '<button class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Eliminar</button>' +
+                                                        '</td>' +
+                                                    '</tr>'
+                                                );
+                                            });
+                                        }
+                                    }
+                                })
+                                $.magnificPopup.close();
+                            });
+                        },
+                        close: function () {
+
+                        }
+                    },
+                    closeOnBgClick: false,
+                    enableEscapeKey: true,
+                    showCloseBtn: false,
+                    tLoading: 'Cargando contenido...',
+                    tError: 'El contenido no ha podido ser cargado.'
+                })
+            },
+            Vars: {
+                Formulario: $('#FrmUsuario'),
+                DatePickerFechaNacimiento: null
+            }
+        }
+
+        $(function () {
+            Usuarios.CargarContenido();
+            Usuarios.Inicializar();
+            
+            Usuarios.Vars.Formulario.find('select[name="Departamento"]').change(function () {
+                $.ajax({
+                    async: false,
+                    type: 'post',
+                    url: General.Utils.ContextPath('AcuerdoComercial/ListarUbigeo'),
+                    data: { vTipo: 'P', vDpto: $(this).val(), vProv: '' },
+                    success: function (response) {
+                        var $provincia = Usuarios.Vars.Formulario.find('select[name="Provincia"]');
+                        $provincia.empty();
+                        $provincia.append($('<option>', { value: -1, text: 'Seleccione' }));
+                        $.grep(response, function (oProvincia) {
+                            $provincia.append($('<option>', { value: oProvincia["CodigoProvincia"], text: oProvincia["Nombre"] }));
+                        });
+                    }
+                });
+            });
+
+            Usuarios.Vars.Formulario.find('select[name="Provincia"]').change(function () {
+                $.ajax({
+                    async: false,
+                    type: 'post',
+                    url: General.Utils.ContextPath('AcuerdoComercial/ListarUbigeo'),
+                    data: { vTipo: 'I', vDpto: Usuarios.Vars.Formulario.find('select[name="Departamento"]').val(), vProv: $(this).val() },
+                    success: function (response) {
+                        var $distrito = Usuarios.Vars.Formulario.find('select[name="Ubigeo.Id"]');
+                        $distrito.empty();
+                        $distrito.append($('<option>', { value: -1, text: 'Seleccione' }));
+                        $.grep(response, function (oDistrito) {
+                            $distrito.append($('<option>', { value: oDistrito["Id"], text: oDistrito["Nombre"] }));
+                        });
+                    }
+                });
+            });
+
+            //$.ajax({
+            //    async: true,
+            //    type: 'post',
+            //    url: General.Utils.ContextPath('Fidelizacion/ListarSucursalesF'),
+            //    success: function (response) {
+            //        console.log('response listaprog', response)
+            //        if (!response.hasOwnProperty('ErrorMessage  ')) {
+            //            console.log(response)
+            //            $('#lstSucursales').append('<option value="-1">Seleccione</option>');
+            //            response.forEach((item) => {
+            //                $('#lstSucursales').append('<option value="' + item.Id + '">' + item.Nombre + '</option>');
+            //            });
+            //        } //
+            //    }
+            //});
+            //$.ajax({
+            //    async: false,
+            //    type: 'post',
+            //    url: General.Utils.ContextPath('Inventario/ListarLineasDeNegocio'),
+            //    dataType: 'json',
+            //    data: { iIdEmpresa: 1 },
+            //    success: function (response) {
+            //        if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error
+            //            $('select[name="lstLineaNegocio"]').append($('<option>', { value: -1, text: 'Seleccione' }));
+            //            $.grep(response, function (oLineaNegocio) {
+            //                $('select[name="lstLineaNegocio"]').append($('<option>', { value: oLineaNegocio["Id"], text: oLineaNegocio["Nombre"] }))
+            //            });
+            //        } 
+            //    }
+            //});
+
+            $('#btnSalir').click(function () {
+                General.Utils.ShowConfirm(
+                    250,
+                    '&#191;Seguro(a) que desea salir?',
+                    '',
+                    function () {
+                        General.Utils.Redirect('Seguridad', 'Principal');
+                    }
+                );
+            });
+
+            $('#btnLimpiar').click(function () {
+                General.Utils.ShowConfirm(
+                    250,
+                    '&#191;Seguro(a) que desea limpiar los campos?',
+                    'Se habilitar&aacute; la opci&oacute;n para crear un nuevo usuario',
+                    function () { limpiar(); }
+                );
+            });
+
+            $('#btnGuardar').click(function () {
+                console.log(Usuarios.Vars.Formulario);
+                if (General.Utils.ValidateForm(Usuarios.Vars.Formulario)) {
+                    $.ajax({
+                        type: Usuarios.Vars.Formulario[0].method,
+                        url: Usuarios.Vars.Formulario[0].action,
+                        data: Usuarios.Vars.Formulario.serialize(),
+                        success: function (response) {
+                            if (response["Id"] == TypeMessage.Success) {
+                                limpiar();
+
+                                General.Utils.ShowModalMessage(response.Id, "", response.Message, function () {
+                                    $(this).scrollTop(0);
+                                    location.reload()
+                                    
+                                });
+
+                            } else {
+                                if (!isNull(response["Additionals"])) {
+                                    $.grep(response["Additionals"], function (item) {
+                                        var lControles = item.split('|');
+                                        $.grep(lControles, function (control) {
+                                            Usuarios.Vars.Formulario.find('*[name="' + control + '"]').closest('.form-group').addClass('has-error');
+                                        });
+                                    });
+                                }
+                                General.Utils.ShowMessageRequest(response);
+                            }
+                        },
+                        statusCode: {
+                            505: function (response) {
+                                Iris.Utils.ShowModalMessage(
+                                    TypeMessage.Information,
+                                    'Sesi&oacute;n Caducada',
+                                    response.statusText,
+                                    function () {
+                                        location.reload();
+                                    }
+                                );
+                            }
+                        }
+                    })
+                }
+            });
+
+            $('#btnModificar').click(function () {
+                if (General.Utils.ValidateForm(Usuarios.Vars.Formulario)) {
+                    $.ajax({
+                        type: Usuarios.Vars.Formulario[0].method,
+                        url: Usuarios.Vars.Formulario[0].action,
+                        data: Usuarios.Vars.Formulario.serialize(),
+                        success: function (response) {
+                            if (response["Id"] == TypeMessage.Success) {
+                                limpiar();
+                                General.Utils.ShowModalMessage(response.Id, "", response.Message, function () {
+                                    $(this).scrollTop(0);
+                                    location.reload()
+                                });
+                            } else {
+                                if (!isNull(response["Additionals"])) {
+                                    $.grep(response["Additionals"], function (item) {
+                                        var lControles = item.split('|');
+                                        $.grep(lControles, function (control) {
+                                            Usuarios.Vars.Formulario.find('*[name="' + control + '"]').closest('.form-group').addClass('has-error');
+                                        });
+                                    });
+                                }
+                                General.Utils.ShowMessageRequest(response);
+                            }
+                        },
+                        statusCode: {
+                            505: function (response) {
+                                Iris.Utils.ShowModalMessage(
+                                    TypeMessage.Information,
+                                    'Sesi&oacute;n Caducada',
+                                    response.statusText,
+                                    function () {
+                                        location.reload();
+                                    }
+                                );
+                            }
+                        }
+                    })
+                }
+            });
+
+            $('#btnAgregar').click(function () {
+                var iIdSucursal = $('#sucursal select[name="Sucursal"]').val(),
+                    iIdLineaNegocio = $('#sucursal select[name="LineaNegocio"]').val(),
+                    iIdUsuario = $('#sucursal input[name="Id"]').val();
+                if (isNull(iIdSucursal) || isNull(iIdLineaNegocio)) {
+                    General.Utils.ShowMessage(TypeMessage.Error, 'Seleccione la sucursal y la l&iacute;nea de negocio');
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: General.Utils.ContextPath('Seguridad/RegistrarAsignacion'),
+                        data: { iIdUsuario: iIdUsuario, iIdSucursal: iIdSucursal, iIdLineaNegocio: iIdLineaNegocio },
+                        success: function (response) {
+                            if (response["Id"] == TypeMessage.Success) {
+                                $.ajax({
+                                    async: true,
+                                    type: 'post',
+                                    url: General.Utils.ContextPath('Seguridad/ListarAsignacionesSucLinPorUsuario'),
+                                    dataType: 'json',
+                                    data: { iIdUsuario: iIdUsuario },
+                                    success: function (response) {
+                                        $('#tbAsignaciones tbody').empty();
+                                        if (response.length == 0) {
+                                            $('#tbAsignaciones tbody').html('<tr><td colspan="3">Agregue las asignaciones correspondientes</td></tr>');
+                                        } else {
+                                            $.grep(response, function (item) {
+                                                $('#tbAsignaciones tbody').append(
+                                                    '<tr data-id="' + item["Id"] + '">' +
+                                                        '<td>' + item["Sucursal"]["Nombre"] + '</td>' +
+                                                        '<td>' + item["LineaNegocio"]["Nombre"] + '</td>' +
+                                                        '<td class="text-center">' +
+                                                            '<button class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Eliminar</button>' +
+                                                        '</td>' +
+                                                    '</tr>'
+                                                );
+                                            });
+                                        }
+                                    }
+                                })
+                                General.Utils.ShowMessageRequest(response);
+                            } else {
+                                if (!isNull(response["Additionals"])) {
+                                    $.grep(response["Additionals"], function (item) {
+                                        var lControles = item.split('|');
+                                        $.grep(lControles, function (control) {
+                                            Usuarios.Vars.Formulario.find('*[name="' + control + '"]').closest('.form-group').addClass('has-error');
+                                        });
+                                    });
+                                }
+                                General.Utils.ShowMessageRequest(response);
+                            }
+                        },
+                        statusCode: {
+                            505: function (response) {
+                                Iris.Utils.ShowModalMessage(
+                                    TypeMessage.Information,
+                                    'Sesi&oacute;n Caducada',
+                                    response.statusText,
+                                    function () {
+                                        location.reload();
+                                    }
+                                );
+                            }
+                        }
+                    })
+                }
+            });
+            $('#btnEliminar').click(() => {
+                General.Utils.ShowConfirm(
+                   250,
+                   '&#191;Seguro(a) que desea eliminar al usuario?',
+                   '',
+                   function () {
+                       $.ajax({
+                           url: General.Utils.ContextPath('Seguridad/DeshabilitarUsuario'),
+                           type: 'post',
+                           data: {
+                               IdUsuario: IdUsuarioGlobal
+                           },
+                           success: function (response) {
+                               console.log(response);
+                               General.Utils.ShowModalMessage(response.Id, "", "Se deshabilitó al usuario correctamente.", function () { location.reload(); });
+                           }
+                       })
+                   });
+            });
+
+            $('#tbAsignaciones tbody').on('click', '.btn-danger', function () {
+                var iIdAsignacion = $(this).closest('tr').attr('data-id');
+                General.Utils.ShowConfirm(
+                    250,
+                    '&#191;Seguro(a) que desea eliminar la asignaci&oacute;n?',
+                    '',
+                    function () {
+                        $.ajax({
+                            async: true,
+                            type: 'post',
+                            url: General.Utils.ContextPath('Seguridad/EliminarAsignacion'),
+                            data: { iIdAsignacion: iIdAsignacion },
+                            success: function (response) {
+                                if (response["Id"] == TypeMessage.Success) {
+                                    var iIdUsuario = $('#sucursal input[name="Id"]').val();
+                                    $.ajax({
+                                        async: true,
+                                        type: 'post',
+                                        url: General.Utils.ContextPath('Seguridad/ListarAsignacionesSucLinPorUsuario'),
+                                        dataType: 'json',
+                                        data: { iIdUsuario: iIdUsuario },
+                                        success: function (response) {
+                                            $('#tbAsignaciones tbody').empty();
+                                            if (response.length == 0) {
+                                                $('#tbAsignaciones tbody').html('<tr><td colspan="3">Agregue las asignaciones correspondientes</td></tr>');
+                                            } else {
+                                                $.grep(response, function (item) {
+                                                    $('#tbAsignaciones tbody').append(
+                                                        '<tr data-id="' + item["Id"] + '">' +
+                                                            '<td>' + item["Sucursal"]["Nombre"] + '</td>' +
+                                                            '<td>' + item["LineaNegocio"]["Nombre"] + '</td>' +
+                                                            '<td class="text-center">' +
+                                                                '<button class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> Eliminar</button>' +
+                                                            '</td>' +
+                                                        '</tr>'
+                                                    );
+                                                });
+                                            }
+                                        }
+                                    })
+                                }
+                                General.Utils.ShowMessageRequest(response);
+                            }
+                        })
+                    }
+                );
+            });
+        });
+
+        function limpiar() {
+            Usuarios.Vars.Formulario.find('select[name="TipoDocumento.Id"]').val("2");
+            Usuarios.Vars.Formulario.find('input[name="NroDocumento"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="Nombre"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="ApellidoPaterno"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="ApellidoMaterno"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="Telefono"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="CorreoElectronico"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="Usuario"]').val("");
+            Usuarios.Vars.Formulario.find('select[name="Perfil.Id"]').val("");
+            Usuarios.Vars.Formulario.find('select[name="Departamento"]').val("");
+            Usuarios.Vars.Formulario.find('select[name="Provincia"]').empty();
+            Usuarios.Vars.Formulario.find('select[name="Ubigeo.Id"]').empty();
+            Usuarios.Vars.Formulario.find('input[name="Direccion"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="FechaNacimiento"]').val("");
+            Usuarios.Vars.Formulario.find('input[name="Password"]').closest('div.form-group').removeClass('hidden');
+            $('#btnModificar').addClass('hidden');
+            $('#btnGuardar').removeClass('hidden');
+            $('#MainTitle').html('CREAR USUARIO');
+            $('#btnEliminar').hide();
+            Usuarios.Vars.Formulario.attr('action', General.Utils.ContextPath('Seguridad/RegistrarUsuario'));
+        }
+    </script>
+}

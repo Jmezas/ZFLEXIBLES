@@ -1,0 +1,265 @@
+﻿
+@{
+    ViewBag.Title = "NuevoOrdenCompra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Generar orden de comra</h2>
+<a href="@Url.Action("OrdenCompra", "GestionActivos")" class="btn-u btn-u-default"><i class="fa fa-arrow-circle-left"></i> Salir</a>&nbsp;
+<button class="btn-u btn-primary" id="btnLimpiar"><i class="fa fa-warning"></i> Limpiar</button>
+<br />
+<br />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tab-v2">
+            <form id="frmCompra">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#info-general" data-toggle="tab">Informaci&oacute;n General</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="info-general">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="tab-v2">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#info-vendedor" data-toggle="tab">Cabecera</a></li>
+                                    </ul>
+                                    <div class="tab-content sky-form">
+                                        <div class="tab-pane fade in active" id="info-vendedor">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Nro de serie</label>
+                                                        <input type="text" class="form-control input-sm no-null" id="txtSerie" name="txtSerie" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Nro de Orden de compra</label>
+                                                        <input type="text" class="form-control input-sm no-null" id="txtNumero" name="txtNumero" disabled>
+                                                    </div>
+                                                </div>
+                                           
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Proveedor</label>
+                                                        <select type="text" class="form-control input-sm no-null" name="ListaProveedor" id="ListaProveedor"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Moneda</label>
+                                                        <select type="text" class="form-control input-sm no-null" name="Moneda" id="Moneda"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <br />
+                        <!--fin-->
+
+
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="tab-v2">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#info-dscto-detalle" data-toggle="tab">Detalle</a></li>
+                                    </ul>
+                                    <div class="tab-content sky-form">
+                                        <div class="tab-pane fade in active" id="info-dscto-detalle">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+
+                                                        <label>Productos</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"> <a href="javascript:void(0)" id="aBuscarProducto"><i class="fa fa-search"></i></a></span>
+                                                            <input id="txtProducto" type="text" class="form-control" name="txtProducto" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <label>Precio</label>
+                                                        <div class="input-group">
+                                                            <input id="txtPrecio" type="text" class="form-control" name="txtPrecio" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <label>cantidad</label>
+                                                        <div class="input-group">
+                                                            <input id="txtCantidad" type="text" class="form-control" name="txtCantidad">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+
+                                                        <span class="btn-u btn-u-green"> <a href="javascript:void(0)" id="btnAgregar"><i class="fa fa-plus-circle"></i></a></span>
+
+                                                        <i class="fa fa-arrow-circle-down"></i>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <table class="table table-bordered" id="tbDetalle">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    @*<th>item</th>*@
+                                                                    <th>Codigo</th>
+                                                                    <th>Nombre Producto</th>
+                                                                    <th>Unid. Medida</th>
+                                                                    <th>Cantidad</th>
+                                                                    <th>Precio</th>
+                                                                    <th>Valor de Comp. (S/IGV)</th>
+                                                                    <th>Valor de Comp. (C/IGV)</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="8">No existen registros</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Modal-->
+                        <div class="modal fade" id="ModalProducto" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <input type="hidden" id="hdfProducto" />
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Lista Producto</h5>
+                                        <button type="button" class="close" id="btnCerrar" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="dvProductos">
+                                            <table class="cell-border compact stripe" style="width:100%" id="tbProductos">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Item</th>
+                                                        <th>C&oacute;digo</th>
+                                                        <th>Nombre del Producto</th>
+                                                        <th>Unidad de Medida</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--fin modal-->
+
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="tab-v2">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#info-total" data-toggle="tab">Totales</a></li>
+                                    </ul>
+                                    <div class="tab-content sky-form">
+                                        <div class="tab-pane fade in active" id="info-total">
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <div class="form-group">
+                                                        <h4>Cantidad</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h4>Sub Total</h4>
+                                                    </div>
+
+                                                   
+                                                    <div class="form-group">
+                                                        <h4>Sumatoria IGV</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h4>Importe Total de la Compra </h4>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <h4>Moneda</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <h4 id="hCantidad">0.00</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h4 id="hTotalValorVta">0.00</h4>
+                                                    </div>
+
+                                                    
+                                                    <div class="form-group">
+                                                        <h4 id="hSumIgv">0.00</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h4 id="hImpTotalVta">0.00</h4>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <h4 id="hMonedaComprobante"></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group pull-right">
+            <button class="btn-u btn-u-green" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/plugins/timepicker.js"></script>
+    <script type="text/javascript" src="~/Assets/js/pages/Compras/OrdenCompra.js"></script>
+}

@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewBag.Title = "Lista Prodcuto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LISTA DE PRODUCTOS</h2>
+<div class="form-group">
+    <a href="@Url.Action("Principal", "Seguridad")" class="btn-u btn-u-default"><i class="fa fa-arrow-circle-left"></i> Salir</a>&nbsp;
+    <button class="btn-u btn-u-blue" id="btnNuevo"><i class="fa fa-plus"></i>Nuevo Producto</button>
+
+</div>
+
+
+
+<div class="tab-v2">
+    @*<ul class="nav nav-tabs">
+        <li class="active"><a href="#info-product" data-toggle="tab">Informaci&oacute;n del Producto</a></li>
+    </ul>*@
+    <div class="tab-content sky-form">
+        <div class="tab-pane fade in active" id="info-product">
+
+
+            <div id="dvProductos">
+                <table class="table table-bordered" style="width:100%" id="tbProductos">
+                    <thead>
+                        <tr style="border:1px;">
+                            <th>Item</th>
+                            <th>C&oacute;digo</th>
+                            <th>Nombre del Producto</th>
+                            <th>Unidad de Medida</th>
+                            <th>Fecha de Creaci&oacute;n</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+    
+        </div>
+    </div>
+    <!--Nuevo-->
+    <div class="modal fade" id="ModalNuevo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="hdfProducto" />
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Producto</h5>
+                    <button type="button" class="close" id="btnCerrar" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content sky-form" id="dvRegistroNew">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Codigo</label>
+                                        <input type="text" class="form-control input-sm no-null" id="txtCodigoNew" name="txtCodigoNew">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Nombre</label>
+                                        <input type="text" class="form-control input-sm no-null" id="txtNombreNew" name="txtNombreNew">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Descripcion</label>
+                                        <input type="text" class="form-control input-sm" id="txtDescripcionNew" name="txtDescripcionNew">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Unidad Medida</label>
+                                        <select class="form-control input-sm no-null" name="UnidadNew" id="UnidadNew"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Precio Venta</label>
+                                        <input type="text" class="form-control input-sm no-null" id="txtPrecioVentaNew" name="txtPrecioVentaNew">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Precio Compra</label>
+                                        <input type="text" class="form-control input-sm no-null" id="txtPrecioCompraNew" name="txtPrecioCompraNew">
+                                    </div>
+                                </div>
+                            </div>
+                          
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarpx">cancelar</button>
+                    <button type="button" id="btnGrabarFinal" class="btn btn-primary">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Fin modal-->
+    <!--Editar -->
+    <div class="modal fade" id="exampleModalCenter" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="hdfProducto" />
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modificar Producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content sky-form" id="dvRegistro">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Codigo</label>
+                                        <input type="text" class="form-control input-sm" id="txtCodigo" name="txtCodigo">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Nombre</label>
+                                        <input type="text" class="form-control input-sm" id="txtNombre" name="txtNombre">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Descripcion</label>
+                                        <input type="text" class="form-control input-sm" id="txtDescripcion" name="txtDescripcion">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Unidad Medida</label>
+                                        <select class="form-control input-sm no-null" name="Unidad" id="Unidad"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Precio Venta</label>
+                                        <input type="text" class="form-control input-sm" id="txtPrecioVenta" name="txtPrecioVenta">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Precio Compra</label>
+                                        <input type="text" class="form-control input-sm" id="txtPrecioCompra" name="txtPrecioCompra">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+
+                                    <div class="input-group">
+
+
+                                        <input class="apple-switch" type="checkbox" id="Estado">
+
+
+                                        &nbsp;&nbsp;<label>Estado</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+                    <button type="button" id="btnGrabar" class="btn btn-primary">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/pages/Producto/ListaProducto.js"></script>
+}

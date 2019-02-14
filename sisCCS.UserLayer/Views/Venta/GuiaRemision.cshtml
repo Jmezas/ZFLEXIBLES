@@ -1,0 +1,448 @@
+﻿
+@{
+    ViewBag.Title = "GuiaRemision";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Guia Remision</h2>
+<div class="form-group">
+
+    <button class="btn-u btn-primary" id="btnLimpiar"><i class="fa fa-warning"></i> Limpiar</button>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tab-v2">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#info-cliente" data-toggle="tab">Datos del documento</a></li>
+            </ul>
+            <div class="tab-content sky-form">
+                <div class="tab-pane fade in active" id="info-cliente" name="info-cliente">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="tab-v2">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#" data-toggle="tab">Domisilio de llegada</a></li>
+                                </ul>
+                                <div class="tab-content sky-form">
+                                    <div class="tab-pane fade in active" id="info" name="info">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label>Dirección de llegada</label>
+                                                    <input type="text" class="form-control" id="txtPuntoLlegada" name="txtPuntoLlegada" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Departamento</label>
+                                                    <select id="ListaDepartamento" name="listaDepartamento" class="form-control input-ms"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Provincia</label>
+                                                    <select id="ListaProvincia" name="ListaProvincia" class="form-control input-ms">
+                                                        <option>Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Distrito</label>
+                                                    <select id="ListaDistrito" name="ListaDistrito" class="form-control input-ms">
+                                                        <option>Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="tab-v2">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#" data-toggle="tab">Unidad de transporte y/o conducir</a></li>
+                                </ul>
+                                <div class="tab-content sky-form">
+                                    <div class="tab-pane fade in active" id="info" name="info">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>transporte-Marca</label>
+                                                    <input type="text" id="txtmarca" name="txtmarca" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>transporte-placa</label>
+                                                    <input type="text" id="txtplaca" name="txtplaca" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>N° Lic. Conducir</label>
+                                                    <input type="text" id="txtlicencia" name="txtlicencia" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="tab-v2">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#" data-toggle="tab">Empresa de transporte</a></li>
+                                </ul>
+                                <div class="tab-content sky-form">
+                                    <div class="tab-pane fade in active" id="info" name="info">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Nombre o razon social</label>
+                                                    <input type="text" id="txtEmpresa" name="txtEmpresa" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Nro. Ruc.</label>
+                                                    <input type="text" id="txtRucEmpresa" name="txtRucEmpresa" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>FechaEmision</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon cursor-pointer"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" id="txtFechaEmision" name="txtFechaEmision" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+                                            <label> Serie</label>
+                                            <input type="text" id="txtSerie" name="txtSerie" class="form-control" disabled />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+                                            <label>Numero</label>
+                                            <input type="text" id="txtNumero" name="txtNumero" class="form-control" disabled />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="tab-v2">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#" data-toggle="tab">Informacion del documento</a></li>
+                                </ul>
+                                <div class="tab-content sky-form">
+                                    <div class="tab-pane fade in active" id="info" name="info">
+                                        <div class="row">
+                                            <div class="col-lg-9">
+                                                <div class="form-group">
+                                                    <label>Fecha Operación</label>
+                                                    <input id="txtFechaDoc" name="txtFechaDoc" class="form-control input-sm" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-10">
+                                                <div class="form-group">
+                                                    <label>Tipo Documento identitidad</label>
+                                                    <select class="form-control" id="ltDocumento" name="ltDocumento"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="tab-v2">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#" data-toggle="tab">Destinatario</a></li>
+                                </ul>
+                                <div class="tab-content sky-form">
+                                    <div class="tab-pane fade in active" id="info" name="info">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Comprobante de pago</label>
+                                                    <button class="btn-u btn-u-dark-blue btn-block" id="btnBuscarCot"><i class="fa fa-plus-circle"></i> Seleccionar Comprobante</button>
+
+                                                </div>
+                                                <input type="hidden" id="IdDoc" />
+                                                <input type="hidden" id="IdCliente" />
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Serie y nùmero de documento</label>
+                                                    <input type="text" id="txtSeriNumero" name="txtSeriNumero" class="form-control" disabled />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Fecha emision</label>
+                                                    <input type="text" id="txtfechaEmindoc" name="txtfechaEmindoc" class="form-control" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="form-group">
+                                                    <label>Número de Documento Identidad</label>
+                                                    <input type="text" id="txtDocumentoCli" name="txtDocumentoCli" class="form-control" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label>Apellidos y Nombres o Razón Social</label>
+                                                    <input type="text" id="txtRazonCli" name="txtRazonCli" class="form-control" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label>Dirección</label>
+                                                    <input type="text" id="txtdireccionCli" name="txtdireccionCli" class="form-control" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="tab-v2">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#" data-toggle="tab">Detalle</a></li>
+                                </ul>
+                                <div class="tab-content sky-form">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <table class="table table-bordered" id="tbDetalle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Codigo</th>
+                                                        <th>Nombre Producto</th>
+                                                        <th>Unid. Medida</th>
+                                                        <th>CM²</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td colspan="4">No existen registros</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <label>Motivo de traslado</label>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="ve"><i class="rounded-x"></i>Venta</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="vs"><i class="rounded-x"></i>Venta sujeta a confirmar</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="co"><i class="rounded-x"></i>Compra</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="cn"><i class="rounded-x"></i>Consignación</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="de"><i class="rounded-x"></i>Devolución</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="en"><i class="rounded-x"></i>Entro Establecida de la misma empresa</label>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="pa"><i class="rounded-x"></i>Para Transformación</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="re"><i class="rounded-x"></i>Recojo bienes transformados</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="em"><i class="rounded-x"></i>Emisor itinerante</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="za"><i class="rounded-x"></i>Zona primaria</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="im"><i class="rounded-x"></i>Importación</label>
+                                                    <label class="radio"><input type="radio" name="rbLineaNegocio" value="ex"><i class="rounded-x"></i>Exportación</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="tab-content sky-form">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Asunto</label>
+                                            <input type="text" id="txtAsunto" name="txtAsunto" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Mensaje</label>
+                                            <textarea type="text" id="txtMensaje" name="txtMensaje" class="form-control" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalCotizacion" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="hdfCotizacion" />
+                <h5 class="modal-title" id="exampleModalLongTitle">Lista Cotizacion</h5>
+                <button type="button" class="close" id="btnCerrar" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="tab-v2">
+                <div class="tab-content sky-form">
+                    <div class="" id="info" name="info">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Cliente</label>
+                                    <input type="text" id="txtCliente" name="txtCliente" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Nro. Doc.</label>
+                                    <input type="text" id="txtDocumento" name="txtDocumento" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Serie-Numero</label>
+                                    <input type="text" id="txtNumeroSerie" name="txtNumeroSerie" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label>Fecha Inicio</label>
+                                    <input type="text" id="txtFechaInicio" name="txtFechaInicio" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label>Fecha Fin</label>
+                                    <input type="text" id="txtFechaFin" name="txtFechaFin" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <br />
+                                    <button class="btn-u btn-u-blue" id="btnFiltrar"><i class="fa fa-filter"></i> Filtrar</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-body">
+                            <div id="dvCotizacion" style="max-height: 400px; overflow-y: auto;">
+                                <table class="table table-bordered" style="width:100%" id="tbCotizacion">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Serie y Numero</th>
+                                            <th>Nro. Doc.</th>
+                                            <th>Cliente</th>
+                                            <th>Fecha Emision</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <p id="pHelperCotizacion" style="margin-top: 5px; font-size: 11px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group pull-right">
+            <button class="btn-u btn-u-green" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/pages/Venta/GuiaRemision.js"></script>
+}

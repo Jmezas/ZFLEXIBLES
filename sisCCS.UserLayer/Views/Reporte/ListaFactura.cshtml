@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "ListaFactura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListaFactura</h2>
+
+<div class="tab-v2">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#info-product" data-toggle="tab">Informaci&oacute;n del Factura</a></li>
+    </ul>
+    <div class="tab-content sky-form">
+        <div class="tab-pane fade in active" id="info-product">
+
+
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Cliente</label>
+                        <input type="text" class="form-control input-sm" name="Cliente" id="Cliente" placeholder="Ingrese Cliente">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Numero Doc</label>
+                        <input type="text" class="form-control input-sm" name="documento" id="documento" placeholder="Numero Documento">
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Fecha Inicio</label>
+                        <label class="input">
+                            <i class="icon-append fa fa-calendar" style="float:right"></i>
+                            <input type="text" class="form-control" name="txtFechaInicio" id="txtFechaInicio" style="float:right">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label>Fecha Fin</label>
+                        <label class="input">
+                            <i class="icon-append fa fa-calendar" style="float:right"></i>
+                            <input type="text" class="form-control" name="txtFechaFin" id="txtFechaFin" style="float:right">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Tipo de Documento</label>
+                        <select id="lstTipoDoc" name="lstTipoDoc" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <br />
+                        <button class="btn-u btn-u-blue" id="btnFiltrar"><i class="fa fa-filter"></i> Filtrar</button>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <br />
+                        <button class="btn-u btn-u-red" id="btnFactura"><i class="fa fa-file-pdf-o"></i> PDF</button>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="dvProductos" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-bordered" id="tbProductos">
+                    <thead>
+                        <tr>
+
+                            <th>Item</th>
+                            <th>Tipo Doc</th>
+                            <th>Serie-Numero</th>
+                            <th>Fecha de Creaci&oacute;n</th>
+
+                            <th>Nro. Doc</th>
+                            <th>Cliente</th>
+                            <th>Telefono</th>
+                            <th>Moneda</th>
+                            <th>Cantidad</th>
+                            <th>SubTotal</th>
+                            <th>IGV</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+            <p id="pHelperProductos" style="margin-top: 5px; font-size: 11px;"></p>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/pages/Reporte/ListaFacBol.js"></script>
+}

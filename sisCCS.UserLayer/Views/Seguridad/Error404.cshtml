@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Error404";
+    Layout = null;
+}
+
+@*<h2>Error404</h2>*@
+
+<head>
+    <title>SmartSelling | Error</title>
+
+
+    <!--<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <link href="../Content/bootstrap.min.css" rel="stylesheet">
+    <link href="../Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="../Content/animate.css" rel="stylesheet">
+    <link href="../Content/style.css" rel="stylesheet">-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Web Fonts -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin'>
+
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="~/Assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Assets/css/style.css">
+
+    <!-- CSS Header and Footer -->
+    <link rel="stylesheet" href="~/Assets/css/headers/header-default.css">
+    <link rel="stylesheet" href="~/Assets/css/footers/footer-v3.css">
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="~/Assets/plugins/animate.css">
+    <link rel="stylesheet" href="~/Assets/plugins/line-icons/line-icons.css">
+    <link rel="stylesheet" href="~/Assets/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Assets/plugins/sky-forms-pro/skyforms/css/sky-forms.css">
+    <link rel="stylesheet" href="~/Assets/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">
+    <link rel="stylesheet" href="~/Assets/plugins/image-hover/css/img-hover.css">
+    <link href="~/Assets/plugins/magnific-popup/css/magnific-popup.css" rel="stylesheet" />
+    <link href="~/Assets/plugins/toastr/css/toastr.min.css" rel="stylesheet" />
+
+    <!-- CSS Theme -->
+    <link rel="stylesheet" href="~/Assets/css/theme-colors/default.css" id="style_color">
+    <link rel="stylesheet" href="~/Assets/css/theme-skins/dark.css">
+</head>
+
+<body class="gray-bg">
+
+
+    <div class="middle-box text-center animated fadeInDown">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h1>404</h1>
+        <!--<h3 class="font-bold">&#161;Oops&#33;</h3>-->
+
+        <div class="error-desc">
+            La p&aacute;gina que buscas no se encuentra disponible, verifica nuevamente
+            <form class="form-inline m-t" role="form" action="@Url.Action("Logout", "Seguridad")">
+                <br />
+                <button type="submit" class="btn btn-primary">Ingresar al sistema</button>
+            </form>
+        </div>
+    </div>
+
+
+</body>

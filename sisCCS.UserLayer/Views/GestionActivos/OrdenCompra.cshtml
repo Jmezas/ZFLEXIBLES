@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista Orden de compra</h2>
+<div class="form-group">
+    <a href="@Url.Action("Principal", "Seguridad")" class="btn-u btn-u-default"><i class="fa fa-arrow-circle-left"></i> Salir</a>&nbsp;
+
+    <a href="@Url.Action("NuevoOrdenCompra", "GestionActivos")" class="btn-u btn-u-blue"><i class="fa fa-plus"></i> Nuevo</a>&nbsp;
+    
+</div>
+
+<div class="tab-v2">
+    <div class="tab-content sky-form">
+        <div class="tab-pane fade in active" id="info-product">
+           
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label>Fecha Incio</label>
+                            <input type="text" class="form-control input-sm no-null" id="txtFechaInicio" name="txtFechaInicio">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label>Fecha Fin</label>
+                            <input type="text" class="form-control input-sm no-null" id="txtFechaFin" name="txtFechaFin">
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label>Nro</label>
+                            <input type="text" class="form-control input-sm no-null" id="txtNumero" name="txtNumero">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <br />
+                        <button class="btn-u btn-u-blue" id="btnFiltrar"><i class="fa fa-filter"></i> Filtrar</button>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <br />
+                        <button class="btn-u btn-u-red" id="btnOrden"><i class="fa fa-file-pdf-o"></i> PDF</button>
+
+
+                    </div>
+                </div>
+            </div>
+                <div id="dvProductos" style="max-height: 400px; overflow-y: auto;">
+                    <input type="hidden" id="idOrden" />
+                    <table class="table table-bordered" id="tbOrdenCompra">
+                        <thead>
+                            <tr style="border:1px;">
+                                <th>Item</th>
+                                <th>Serie - Num.</th>
+                                <th>Fecha Registro</th>
+                                <th>Proveedor</th>
+                                <th>Cantidad</th>
+                                <th>SubTotal</th>
+                                <th>IGV</th>
+                                <th>Total</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <p id="pHelperProductos" style="margin-top: 5px; font-size: 11px;"></p>
+            </div>
+    </div>
+
+
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/pages/Compras/ListaOrden.js"></script>
+}

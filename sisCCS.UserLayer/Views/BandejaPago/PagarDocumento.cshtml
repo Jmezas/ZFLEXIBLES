@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "PagarDocumento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pagar Documento</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tab-v2">
+            <form id="frmCompra">
+                <input type="hidden" id="idPago" value="@ViewBag.PagarDocumento" />
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#info-general" data-toggle="tab">Informaci&oacute;n General</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="info-general">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="tab-v2">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#info-vendedor" data-toggle="tab">Datos del Documento</a></li>
+                                    </ul>
+                                    <div class="tab-content sky-form">
+                                        <div class="tab-pane fade in active" id="info-vendedor">
+                                            <div class="row">
+                                                <div class="col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Tipo Doc</label>
+                                                        <select class="form-control input-sm no-null" id="lstDocumento" name="lstDocumento" disabled></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Nro documento</label>
+                                                        <input type="text" class="form-control input-sm no-null" id="txtNumero" name="txtNumero" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Fecha Emision</label>
+                                                        <input type="text" class="form-control input-sm no-null" name="txtFechaEmision" id="txtFechaEmision" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!--fin-->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="tab-v2">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#info-dscto-detalle" data-toggle="tab">Datos del Cliente</a></li>
+                                    </ul>
+                                    <div class="tab-content sky-form">
+                                        <div class="tab-pane fade in active" id="info-dscto-detalle">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <label>Nombre</label>
+                                                    <input id="txtnombre" type="text" class="form-control" name="txtnombre" disabled>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Dirección</label>
+                                                       
+                                                        <textarea class="form-control" id="txtDireccion" name="txtDireccion" disabled></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Detalle</label>
+                                                        <textarea class="form-control" id="txtDetalle" name="txtDetalle"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="tab-v2">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#info-total" data-toggle="tab">Pago</a></li>
+                                    </ul>
+                                    <div class="tab-content sky-form">
+                                        <div class="tab-pane fade in active" id="info-total">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label>Monto</label>
+                                                    <input id="txtMonto" type="text" class="form-control" name="txtMonto" disabled>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Pagado</label>
+                                                        <input id="txtPagado" type="text" class="form-control" name="txtPagado" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Monto Restante</label>
+                                                        <input id="txtRestante" type="text" class="form-control" name="txtRestante" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Monto  de pago</label>
+                                                        <input id="txtMontoPagar" type="text" class="form-control" name="txtMontoPagar">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group pull-right">
+            <button class="btn-u btn-u-green" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/pages/BandejaPago/PagarDocumento.js"></script>
+}

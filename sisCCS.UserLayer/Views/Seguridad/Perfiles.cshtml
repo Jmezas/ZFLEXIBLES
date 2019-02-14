@@ -1,0 +1,384 @@
+﻿@model sisCCS.EntityLayer.EMenu
+
+@{
+    ViewBag.Title = "Perfiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LISTA DE PERFILES</h2>
+<div class="form-group">
+    <a href="@Url.Action("Principal", "Seguridad")" class="btn-u btn-u-default"><i class="fa fa-arrow-circle-left"></i> Salir</a>&nbsp;
+    <button class="btn-u btn-u-blue" onclick="location.reload();"><i class="fa fa-file-o"></i> Nuevo</button>
+    @*<button class="btn-u btn-u-yellow"><i class="fa fa-question"></i> Ayuda</button>*@
+    <a id="aNuevoPerfil" class="btn-u btn-u-green" href="@Url.Action("Perfil", "Shared")"><i class="fa fa-plus-circle"></i> Crear Perfil</a>
+</div>
+<div class="tab-v2">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#list" data-toggle="tab">Informaci&oacute;n del Perfil</a></li>
+    </ul>
+    <div class="tab-content sky-form">
+        <div class="tab-pane fade in active" id="list">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Nombre del Perfil</label>
+                        <input class="form-control input-sm" name="Filtro" placeholder="Ingrese Nombre del Perfil de Usuario">
+                    </div>
+                </div>
+            </div>
+
+            <div id="dvPerfiles" style="max-height: 220px; overflow-y: auto;">
+                <table class="table table-bordered" id="tbPerfiles">
+                    <thead>
+                        <tr>
+                            <th>Nombre del Perfil de Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <p id="pHelper" style="margin-top: 5px; font-size: 11px;"></p>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var ListadoPerfiles = {
+            CargarContenido: function () {
+                CargarPerfiles();
+            },
+            Inicializar: function () {
+                $('#aNuevoPerfil').magnificPopup({
+                    tClose: 'Cerrar',
+                    type: 'ajax',
+                    settings: {
+                        cache: false,
+                        async: false
+                    },
+                    callbacks: {
+                        ajaxContentAdded: function () {
+                            var $content = $(this.content);
+                            Perfil.Vars.Formulario.attr('action', General.Utils.ContextPath('Seguridad/RegistrarPerfil'));
+                            $content.find('#btnGrabar').click(function () {
+                                if (General.Utils.ValidateForm(Perfil.Vars.Formulario)) {
+                                    $.ajax({
+                                        type: Perfil.Vars.Formulario[0].method,
+                                        url: Perfil.Vars.Formulario[0].action,
+                                        data: Perfil.Vars.Formulario.serialize(),
+                                        success: function (response) {
+                                            if (response["Id"] == TypeMessage.Success) {
+                                                CargarPerfiles();
+                                                $.magnificPopup.close();
+                                                General.Utils.ShowMessageRequest(response);
+                                            } else {
+                                                if (!isNull(response["Additionals"])) {
+                                                    $.grep(response["Additionals"], function (item) {
+                                                        var lControles = item.split('|');
+                                                        $.grep(lControles, function (control) {
+                                                            Perfil.Vars.Formulario.find('*[name="' + control + '"]').closest('.form-group').addClass('has-error');
+                                                        });
+                                                    });
+                                                }
+                                                General.Utils.ShowMessageRequest(response);
+                                            }
+                                        },
+                                        statusCode: {
+                                            505: function (response) {
+                                                Iris.Utils.ShowModalMessage(
+                                                    TypeMessage.Information,
+                                                    'Sesi&oacute;n Caducada',
+                                                    response.statusText,
+                                                    function () {
+                                                        location.reload();
+                                                    }
+                                                );
+                                            }
+                                        }
+                                    })
+                                }
+                            });
+                        },
+                        close: function () {
+
+                        }
+                    },
+                    closeOnBgClick: false,
+                    enableEscapeKey: true,
+                    showCloseBtn: false,
+                    tLoading: 'Cargando contenido...',
+                    tError: 'El contenido no ha podido ser cargado.'
+                });
+            },
+            Vars: {
+
+            }
+        };
+
+        $(function () {
+
+            ListadoPerfiles.CargarContenido();
+            ListadoPerfiles.Inicializar();
+
+            $('input[name="Filtro"]').keyup(function (event) {
+                if (event.keyCode == 13) {
+                    CargarPerfiles();
+                }
+            });
+
+            $('#btnLimpiar').click(function () {
+                General.Utils.ShowConfirm(
+                    250,
+                    '&#191;Seguro(a) que desea limpiar los filtros?',
+                    null,
+                    function () {
+                        limpiar();
+                        cargarProductos();
+                    },
+                    function () { }
+                );
+            });
+
+            $('#tbPerfiles tbody').on('mouseenter', 'tr', function () {
+                $('#tbPerfiles tbody tr').removeClass('selected');
+                $(this).addClass('selected');
+            });
+
+            $('#tbPerfiles').find('tbody').on('click', '.btn-danger', function () {
+                var iIdPerfil = $(this).closest('tr').attr('data-id');
+                General.Utils.ShowConfirm(
+                    250,
+                    '&#191;Seguro(a) que desea eliminar el producto seleccionado?',
+                    null,
+                    function () {
+                        $.ajax({
+                            async: true,
+                            type: 'post',
+                            url: General.Utils.ContextPath('Seguridad/EliminarPerfil'),
+                            dataType: 'json',
+                            data: { iIdPerfil: iIdPerfil },
+                            success: function (response) {
+                                CargarPerfiles();
+                                General.Utils.ShowMessageRequest(response);
+                            }
+                        })
+                    },
+                    function () { }
+                );
+            });
+
+            $('#dvPerfiles').scroll(function () {
+                var iComienzo = $('#tbPerfiles').find('tbody tr').length,
+                    sFiltro = $('input[name="Filtro"]').val();
+                // Si el scroll se encuentra abajo de todo el DOM
+                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                    // Mostrar más resultados
+                    $.ajax({
+                        async: true,
+                        type: 'post',
+                        url: General.Utils.ContextPath('Seguridad/ListarPerfilesPaginacion'),
+                        beforeSend: General.Utils.StartLoading,
+                        complete: General.Utils.EndLoading,
+                        dataType: 'json',
+                        data: { iComienzo: iComienzo, iMedida: 20, sFiltro: sFiltro },
+                        success: function (response) {
+                            if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error
+                                var $tb = $('#tbPerfiles');
+                                if (response["Total"] == 0) {
+                                    return false;
+                                }
+                                if (response["Datos"].length == 0) {
+                                    General.Utils.ShowMessage(TypeMessage.Information, 'No existen m&aacute;s resultados para mostrar.');
+                                } else {
+                                    $.grep(response["Datos"], function (item) {
+                                        $tb.find('tbody').append(
+                                            '<tr data-id="' + item["Id"] + '">' +
+                                                '<td>' + item["Nombre"] + '</td>' +
+                                                '<td class="text-center">' +
+                                                    '<a class="btn btn-warning btn-xs" target="_blank" href="' + General.Utils.ContextPath('Shared/Perfil/' + item["Id"]) + '"><i class="fa fa-pencil"></i> Modificar</a>' +
+                                                    '<button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button>' +
+                                                    '<a class="btn btn-warning btn-xs" target="_blank" href="' + General.Utils.ContextPath('Seguridad/AccesosPorPerfil/' + item["Id"]) + '"><i class="fa fa-pencil"></i> Editar Accesos</a>' +
+                                                '</td>' +
+                                            '</tr>'
+                                        );
+                                    });
+                                    $('#tbPerfiles tbody').find('.btn-warning').magnificPopup({
+                                        tClose: 'Cerrar',
+                                        type: 'ajax',
+                                        settings: {
+                                            cache: false,
+                                            async: false
+                                        },
+                                        callbacks: {
+                                            ajaxContentAdded: function () {
+                                                var $content = $(this.content);
+                                                Perfil.Vars.Formulario.attr('action', General.Utils.ContextPath('Seguridad/ModificarPerfil'));
+                                                Perfil.Vars.Formulario.find('input[name="Id"]').val($('#tbPerfiles tbody').find('tr.selected').attr('data-id'));
+                                                Perfil.Vars.Formulario.find('input[name="Nombre"]').val($('#tbPerfiles tbody').find('tr.selected').attr('data-name'));
+                                                $content.find('#btnGrabar').click(function () {
+                                                    if (General.Utils.ValidateForm(Perfil.Vars.Formulario)) {
+                                                        $.ajax({
+                                                            type: Perfil.Vars.Formulario[0].method,
+                                                            url: Perfil.Vars.Formulario[0].action,
+                                                            data: Perfil.Vars.Formulario.serialize(),
+                                                            success: function (response) {
+                                                                if (response["Id"] == TypeMessage.Success) {
+                                                                    CargarPerfiles();
+                                                                    $.magnificPopup.close();
+                                                                    General.Utils.ShowMessageRequest(response);
+                                                                } else {
+                                                                    if (!isNull(response["Additionals"])) {
+                                                                        $.grep(response["Additionals"], function (item) {
+                                                                            var lControles = item.split('|');
+                                                                            $.grep(lControles, function (control) {
+                                                                                Perfil.Vars.Formulario.find('*[name="' + control + '"]').closest('.form-group').addClass('has-error');
+                                                                            });
+                                                                        });
+                                                                    }
+                                                                    General.Utils.ShowMessageRequest(response);
+                                                                }
+                                                            },
+                                                            statusCode: {
+                                                                505: function (response) {
+                                                                    Iris.Utils.ShowModalMessage(
+                                                                        TypeMessage.Information,
+                                                                        'Sesi&oacute;n Caducada',
+                                                                        response.statusText,
+                                                                        function () {
+                                                                            location.reload();
+                                                                        }
+                                                                    );
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                });
+                                            },
+                                            close: function () {
+
+                                            }
+                                        },
+                                        closeOnBgClick: false,
+                                        enableEscapeKey: true,
+                                        showCloseBtn: false,
+                                        tLoading: 'Cargando contenido...',
+                                        tError: 'El contenido no ha podido ser cargado.'
+                                    });
+                                    $('#pHelperProductos').html('Existe(n) ' + response["Total"] + ' resultado(s) para mostrar.' +
+                                        (response["Total"] > 0 ? ' Desl&iacute;cese hacia abajo para visualizar m&aacute;s...' : ''));
+                                }
+                            }
+                        }
+                    })
+                }
+            });
+
+        })
+
+        function CargarPerfiles() {
+            var sFiltro = $('input[name="Filtro"]').val();
+            $.ajax({
+                async: false,
+                type: 'post',
+                url: General.Utils.ContextPath('Seguridad/ListarPerfilesPaginacion'),
+                beforeSend: General.Utils.StartLoading,
+                complete: General.Utils.EndLoading,
+                dataType: 'json',
+                data: { iComienzo: 0, iMedida: 20, sFiltro: sFiltro },
+                success: function (response) {
+                    if (!response.hasOwnProperty('ErrorMessage')) { // Si la petición no emitió error
+                        var $tb = $('#tbPerfiles')
+                        $tb.find('tbody').empty();
+                        if (response["Datos"].length == 0) {
+                            $tb.find('tbody').html('<tr><td colspan="6">No hay resultados para el filtro ingresado</td></tr>');
+                            $('#pHelper').html('');
+                        } else {
+                            $.grep(response["Datos"], function (item) {
+                                $tb.find('tbody').append(
+                                    '<tr data-id="' + item["Id"] + '" data-name="' + item["Nombre"] + '">' +
+                                        '<td>' + item["Nombre"] + '</td>' +
+                                        '<td class="text-center">' +
+                                            '<a class="btn btn-warning btn-xs" href="' + General.Utils.ContextPath('Shared/Perfil/' + item["Id"]) + '"><i class="fa fa-pencil"></i> Modificar</a>' +
+                                            '<button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button>' +
+                                            '<a class="btn btn-info btn-xs" target="_blank" href="' + General.Utils.ContextPath('Seguridad/AccesosPorPerfil/' + item["Id"]) + '"><i class="fa fa-pencil"></i> Editar Accesos</a>' +
+                                        '</td>' +
+                                    '</tr>'
+                                );
+                            });
+                            $('#tbPerfiles tbody').find('.btn-warning').magnificPopup({
+                                tClose: 'Cerrar',
+                                type: 'ajax',
+                                settings: {
+                                    cache: false,
+                                    async: false
+                                },
+                                callbacks: {
+                                    ajaxContentAdded: function () {
+                                        var $content = $(this.content);
+                                        Perfil.Vars.Formulario.attr('action', General.Utils.ContextPath('Seguridad/ModificarPerfil'));
+                                        Perfil.Vars.Formulario.find('input[name="Id"]').val($('#tbPerfiles tbody').find('tr.selected').attr('data-id'));
+                                        Perfil.Vars.Formulario.find('input[name="Nombre"]').val($('#tbPerfiles tbody').find('tr.selected').attr('data-name'));
+                                        $content.find('#btnGrabar').click(function () {
+                                            if (General.Utils.ValidateForm(Perfil.Vars.Formulario)) {
+                                                $.ajax({
+                                                    type: Perfil.Vars.Formulario[0].method,
+                                                    url: Perfil.Vars.Formulario[0].action,
+                                                    data: Perfil.Vars.Formulario.serialize(),
+                                                    success: function (response) {
+                                                        if (response["Id"] == TypeMessage.Success) {
+                                                            CargarPerfiles();
+                                                            $.magnificPopup.close();
+                                                            General.Utils.ShowMessageRequest(response);
+                                                        } else {
+                                                            if (!isNull(response["Additionals"])) {
+                                                                $.grep(response["Additionals"], function (item) {
+                                                                    var lControles = item.split('|');
+                                                                    $.grep(lControles, function (control) {
+                                                                        Perfil.Vars.Formulario.find('*[name="' + control + '"]').closest('.form-group').addClass('has-error');
+                                                                    });
+                                                                });
+                                                            }
+                                                            General.Utils.ShowMessageRequest(response);
+                                                        }
+                                                    },
+                                                    statusCode: {
+                                                        505: function (response) {
+                                                            Iris.Utils.ShowModalMessage(
+                                                                TypeMessage.Information,
+                                                                'Sesi&oacute;n Caducada',
+                                                                response.statusText,
+                                                                function () {
+                                                                    location.reload();
+                                                                }
+                                                            );
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        });
+                                    },
+                                    close: function () {
+
+                                    }
+                                },
+                                closeOnBgClick: false,
+                                enableEscapeKey: true,
+                                showCloseBtn: false,
+                                tLoading: 'Cargando contenido...',
+                                tError: 'El contenido no ha podido ser cargado.'
+                            });
+                            $('#pHelper').html('Existe(n) ' + response["Total"] + ' resultado(s) para mostrar.' +
+                                (response["Total"] > 0 ? ' Del&iacute;cese hacia abajo para visualizar m&aacute;s...' : ''));
+                        }
+                    }
+                }
+            })
+        }
+
+        function limpiar() {
+            $('input[name="Filtro"]').val("");
+            CargarPerfiles();
+        }
+    </script>
+}

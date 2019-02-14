@@ -1,0 +1,248 @@
+﻿
+@{
+    ViewBag.Title = "ListaCliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Cliente</h2>
+
+<div class="form-group">
+    <a href="@Url.Action("Principal", "Seguridad")" class="btn-u btn-u-default"><i class="fa fa-arrow-circle-left"></i> Salir</a>&nbsp;
+    <button class="btn-u btn-u-blue" id="btnNuevo"><i class="fa fa-plus"></i>Nuevo Cliente</button>
+
+</div>
+
+
+
+<div class="tab-v2">
+    @*<ul class="nav nav-tabs">
+            <li class="active"><a href="#info-product" data-toggle="tab">Informaci&oacute;n del Producto</a></li>
+        </ul>*@
+    <div class="tab-content sky-form">
+        <div class="tab-pane fade in active" id="info-product">
+            <div id="dvCliente">
+                <table class="cell-border compact stripe" style="width:100%" id="tbCliente">
+                    <thead>
+                        <tr style="border:1px;">                           
+                            <th>Tipo Doc.</th>
+                            <th>Nro. Doc.</th>
+                            <th>Razon Social/Nombres</th>
+                            <th>Telefono</th>
+                            <th>Celular</th>
+                            <th>Email</th>
+                            <th>Direccion</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--Nuevo-->
+    <div class="modal fade" id="ModalNuevo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="hdfProducto" />
+                    <h5 class="modal-title" id="exampleModalLongTitle">Nuevo Cliente</h5>
+                    <button type="button" class="close" id="btnCerrar" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content sky-form" id="dvRegistroNew">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Documento</label>
+                                        <select class="form-control input-sm no-null" name="Documento" id="Documento"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9">
+                                <div class="form-group">
+                                    <label>Nro. Documneto</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <a href="javascript:void(0)" id="Buscar"><i class="fa fa-search"></i></a></span>
+                                        <input id="txtDocumento" type="text" class="form-control input-sm no-null" name="txtDocumento">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label id="idrazon">Razon Social</label>
+                                        <label id="idNombre">Nombres Completos</label>
+                                        <input type="text" class="form-control input-sm no-null" id="txtRazon" name="txtRazon" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Celular</label>
+                                    <div class="input-group">
+                                   
+                                        <input type="text" class="form-control input-sm " id="txtCelular" name="txtCelular">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Telefono</label>
+                                    <div class="input-group">
+                                    
+                                        <input type="text" class="form-control input-sm" id="txtTelefono" name="txtTelefono">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+
+                                    <input type="text" class="form-control input-sm no-null" id="txtEmail" name="txtEmail">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>direccion </label>
+                                    <input type="text" class="form-control input-sm" id="txtDireccion" name="txtDireccion">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarpx">cancelar</button>
+                    <button type="button" id="btnGrabarFinal" class="btn btn-primary">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Fin modal-->
+    <!--Editar -->
+    <div class="modal fade" id="exampleModalCenter" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="hdfCliente" />
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modificar Cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content sky-form" id="dvRegistro">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>Documento</label>
+                                        <select class="form-control input-sm no-null" name="DocumentoEdit" id="DocumentoEdit"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9">
+                                <div class="form-group">
+                                    <label>Nro. Documneto</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <a href="javascript:void(0)" id="Buscar"><i class="fa fa-search"></i></a></span>
+                                        <input id="txtDocumentoEdit" type="text" class="form-control input-sm no-null" name="txtDocumentoEdit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label id="idrazon">Razon Social / Nombres Completos</label>
+                                       
+                                        <input type="text" class="form-control input-sm no-null" id="txtRazonEdit" name="txtRazonEdit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Celular</label>
+                                    <div class="input-group">
+
+                                        <input type="text" class="form-control input-sm " id="txtCelularEdit" name="txtCelularEdit">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Telefono</label>
+                                    <div class="input-group">
+
+                                        <input type="text" class="form-control input-sm " id="txtTelefonoEdit" name="txtTelefonoEdit">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+
+                                    <input type="text" class="form-control input-sm no-null" id="txtEmailEdit" name="txtEmailEdit">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>direccion </label>
+                                    <input type="text" class="form-control input-sm " id="txtDireccionEdit" name="txtDireccionEdit">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                          
+                           
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+
+                                    <div class="input-group">
+
+
+                                        <input class="apple-switch" type="checkbox" id="Estado">
+
+
+                                        &nbsp;&nbsp;<label>Estado</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+                    <button type="button" id="btnGrabar" class="btn btn-primary">Grabar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/pages/Cliente/Cliente.js"></script>
+}
+

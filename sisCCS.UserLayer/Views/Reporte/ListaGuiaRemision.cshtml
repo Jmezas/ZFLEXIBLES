@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "ListaGuiaRemision";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListaGuiaRemision</h2>
+
+<div class="tab-content sky-form">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Cliente</label>
+                <input type="text" class="form-control input-sm" name="txtCliente" id="txtCliente" placeholder="Ingrese Cliente">
+            </div>
+        </div>
+
+
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Numero</label>
+                <input type="text" class="form-control input-sm" name="txtNumero" id="txtNumero" placeholder="Numero Documento">
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Fecha Inicio</label>
+                <label class="input">
+                    <i class="icon-append fa fa-calendar" style="float:right"></i>
+                    <input type="text" class="form-control" name="txtFechaInicio" id="txtFechaInicio" style="float:right">
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Fecha Fin</label>
+                <label class="input">
+                    <i class="icon-append fa fa-calendar" style="float:right"></i>
+                    <input type="text" class="form-control" name="txtFechaFin" id="txtFechaFin" style="float:right">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Tipo de Documento</label>
+                <select id="lstTipoDoc" name="lstTipoDoc" class="form-control input-sm"></select>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Serie-Numero</label>
+                <input type="text" class="form-control input-sm" name="txtDocumento" id="txtDocumento">
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <br />
+                <button class="btn-u btn-u-blue" id="btnFiltrar"><i class="fa fa-filter"></i> Filtrar</button>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <br />
+                <button class="btn-u btn-u-red" id="btnPDf"><i class="fa fa-file-pdf-o"></i> PDF</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="divGuia" style="max-height: 450px; overflow-y: auto;">
+        <table class="table table-bordered" id="tbGuia">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Serie-Numero</th>   
+                    <th>Fecha Emision</th>
+                    <th>Nro Doctizacion</th>
+                    <th>Nro Doc. Cliente</th>
+                    <th>Nombre Cliente</th>
+                    <th>Motivo</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <p id="pHelperProductos" style="margin-top: 5px; font-size: 11px;"></p>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/Assets/js/pages/Reporte/ListaGuia.js"></script>
+}
