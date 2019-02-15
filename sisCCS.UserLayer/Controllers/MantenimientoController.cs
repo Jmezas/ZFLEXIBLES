@@ -7,6 +7,10 @@ using System.Web.Mvc;
 using sisCCS.BusinessLayer;
 using sisCCS.EntityLayer;
 using sisCCS.UserLayer.Models;
+using System.Web.Script.Serialization;
+using System.Web.Configuration;
+using System.Net;
+using System.IO;
 
 namespace sisCCS.UserLayer.Controllers
 {
@@ -70,6 +74,7 @@ namespace sisCCS.UserLayer.Controllers
                 );
             }
         }
+
         [HttpPost]
         public void RegistrarProducto(EProducto eProducto, string Usuario)
         {
@@ -129,8 +134,117 @@ namespace sisCCS.UserLayer.Controllers
             }
         }
 
+        [HttpPost]
+        public void ProductoCodigo()
+        {
+            try
+            {
+                Utils.Write(
+                    ResponseType.JSON,
+                    Producto.Producto()
+                );
+            }
+            catch (Exception Exception)
+            {
+                Utils.Write(
+                    ResponseType.JSON,
+                    "{ Code: 1, ErrorMessage: \"" + Exception.Message + "\" }"
+                );
+            }
+        }
 
-      
+        [HttpPost]
+        public void BuscarRuc(string ruc)
+        {
+            try
+            {
+                var passwor = "KKK8876d923KKDsiiuii9999s3";
+                var rutConsulta = "https://FACTURALAHOY.com/api/empresa/" + ruc + "/" + passwor;
+                var data = "[]";
+
+
+                string myJson = new JavaScriptSerializer().Serialize(new
+                {
+                    //token = tokenConsultaRuc,
+                    ruc = ruc
+                });
+
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(rutConsulta);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(myJson);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    data = result;
+                }
+                
+                Utils.Write(
+                       ResponseType.JSON,
+                       data
+                   );
+
+            }
+            catch (Exception Exception)
+            {
+                Utils.WriteMessage("error|" + Exception.Message);
+            }
+        }
+
+
+        [HttpPost]
+        public void BuscarDNI(string dni)
+        {
+
+            var ruc = dni;
+            try
+            {
+                var passwor = "KKK8876d923KKDsiiuii9999s3";
+                var rutConsulta = "https://FACTURALAHOY.com/api/persona/" + dni + "/" + passwor;
+                var data = "[]";
+
+                string myJson = new JavaScriptSerializer().Serialize(new
+                {
+                    dni = dni
+                });
+
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(rutConsulta);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(myJson);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    data = result;
+                }
+
+
+                Utils.Write(
+                       ResponseType.JSON,
+                       data
+                   );
+                //rutConsulta + "/" + documento + "/" + passwor;
+
+
+            }
+            catch (Exception Exception)
+            {
+                Utils.WriteMessage("error|" + Exception.Message);
+            }
+        }
+
 
     }
 }

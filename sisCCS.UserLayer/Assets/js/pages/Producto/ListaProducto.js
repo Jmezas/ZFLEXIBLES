@@ -110,6 +110,19 @@
         });
     },
 
+  CargarCodigo: function () {
+        $.ajax({
+            async: true,
+            type: 'post',
+            url: General.Utils.ContextPath("Mantenimiento/ProductoCodigo"),
+            dataType: 'json',
+            success: function (response) {
+               $('#txtCodigoNew').val(response.Codigo);
+            }
+
+        });
+    },
+
     Inicializar: function () { },
 
     Vars: {
@@ -125,11 +138,11 @@ $(function () {
     ListadoProductos.CargarUnidad();
     ListadoProductos.CargarLista();
     ListadoProductos.CargarContenido();
-
+    ListadoProductos.CargarCodigo();
 
 
     $('#btnNuevo').click(function () {
-
+        ListadoProductos.CargarCodigo();
         $("#ModalNuevo").modal("show");
 
         // limpiar();

@@ -106,7 +106,7 @@ namespace sisCCS.DataLayer
                 return oProducto;
             }
         }
-        public string Registrar_Update(EProducto Producto,string Usuario)
+        public string Registrar_Update(EProducto Producto, string Usuario)
         {
             using (var Connection = GetConnection(BaseDeDatos))
             {
@@ -118,7 +118,7 @@ namespace sisCCS.DataLayer
                     AddInParameter("@idMaterial", Producto.IdMaterial);
                     AddInParameter("@scodigo", Producto.Codigo);
                     AddInParameter("@sNomMat", Producto.NombreMat);
-                    AddInParameter("@sDescripcion", Producto.Descripcion,AllowNull);
+                    AddInParameter("@sDescripcion", Producto.Descripcion, AllowNull);
                     AddInParameter("@sUni", Producto.UM.IdMed);
                     AddInParameter("@nPrecioVenta", Producto.PrecioVenta);
                     AddInParameter("@nPrecioCompra", Producto.PrecioCompra);
@@ -130,7 +130,7 @@ namespace sisCCS.DataLayer
                     var smensaje = GetOutput("@Mensaje").ToString();
                     return GetOutput("@Mensaje").ToString();
                 }
-                catch ( Exception Exception)
+                catch (Exception Exception)
                 {
                     throw Exception;
                 }
@@ -140,6 +140,34 @@ namespace sisCCS.DataLayer
                 }
             }
 
+        } 
+        public EProducto Producto()
+        {
+            EProducto oDatos = new EProducto();
+            using (var Connection= GetConnection(BaseDeDatos))
+            {
+                try
+                {
+                    Connection.Open();
+                    SetQuery("LOG_Codigo_Autogenerado_x_Producto");
+                    CreateHelper(Connection);
+                    using(var Reader = ExecuteReader())
+                    {
+                        while (Reader.Read())
+                        {
+                            oDatos.Codigo = Reader["Codigo"].ToString();
+                        }
+                    }
+                }catch(Exception Exception)
+                {
+                    throw Exception;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+                return oDatos;
+            }
         }
     }
 }

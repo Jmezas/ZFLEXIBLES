@@ -167,9 +167,7 @@ namespace sisCCS.UserLayer.Controllers
         {
             try
             {
-                Utils.Write(
-                    ResponseType.JSON,
-                    Factura.VerificarStock(idProducto, iCantidad)
+                Utils.WriteMessage(Factura.VerificarStock(idProducto, iCantidad)
                 );
             }
             catch (Exception Exception)

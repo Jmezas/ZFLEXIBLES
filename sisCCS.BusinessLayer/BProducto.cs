@@ -55,5 +55,16 @@ namespace sisCCS.BusinessLayer
                 throw Exception;
             }
         }
+        public EProducto Producto()
+        {
+            try
+            {
+                return Data.Producto();
+            }
+            catch (Exception Exception)
+            {
+                throw Exception;
+            }
+        }
     }
 }
